@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062B47CD203437F500EDEB9B /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062B47CB203437F500EDEB9B /* CircleView.swift */; };
+		062B47CE203437F500EDEB9B /* TimeLineControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 062B47CC203437F500EDEB9B /* TimeLineControl.swift */; };
 		0656254B203343EE00AB6D5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0656254A203343EE00AB6D5F /* AppDelegate.swift */; };
 		0656254D203343EE00AB6D5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0656254C203343EE00AB6D5F /* ViewController.swift */; };
 		06562550203343EE00AB6D5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0656254E203343EE00AB6D5F /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		062B47CB203437F500EDEB9B /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		062B47CC203437F500EDEB9B /* TimeLineControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineControl.swift; sourceTree = "<group>"; };
 		06562547203343EE00AB6D5F /* TimeLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0656254A203343EE00AB6D5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0656254C203343EE00AB6D5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 		06562549203343EE00AB6D5F /* TimeLine */ = {
 			isa = PBXGroup;
 			children = (
+				065625782033444100AB6D5F /* TimeLine */,
 				0656254A203343EE00AB6D5F /* AppDelegate.swift */,
 				0656254C203343EE00AB6D5F /* ViewController.swift */,
 				0656254E203343EE00AB6D5F /* Main.storyboard */,
@@ -123,6 +128,15 @@
 				0656256C203343EE00AB6D5F /* Info.plist */,
 			);
 			path = TimeLineUITests;
+			sourceTree = "<group>";
+		};
+		065625782033444100AB6D5F /* TimeLine */ = {
+			isa = PBXGroup;
+			children = (
+				062B47CC203437F500EDEB9B /* TimeLineControl.swift */,
+				062B47CB203437F500EDEB9B /* CircleView.swift */,
+			);
+			path = TimeLine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +273,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				062B47CE203437F500EDEB9B /* TimeLineControl.swift in Sources */,
+				062B47CD203437F500EDEB9B /* CircleView.swift in Sources */,
 				0656254D203343EE00AB6D5F /* ViewController.swift in Sources */,
 				0656254B203343EE00AB6D5F /* AppDelegate.swift in Sources */,
 			);
@@ -427,6 +443,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RPCNUD98QA;
 				INFOPLIST_FILE = TimeLine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tableTest.TimeLine;
@@ -441,6 +458,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RPCNUD98QA;
 				INFOPLIST_FILE = TimeLine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tableTest.TimeLine;
