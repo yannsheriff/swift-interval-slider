@@ -12,11 +12,25 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     
     let verticalPosition : CGFloat = 10
     let circleRadius : CGFloat = 8
-    var width : CGFloat!
+    var draggableZoneWidth : CGFloat!
     var firstCircle : CircleView?
     var secondCircle : CircleView?
     var firstValue : CGFloat = 0
     var secondValue : CGFloat = 100
+    var circlesSize : CGFloat = 32
+    
+    func calcXposition(percent: CGFloat) -> (left: CGFloat, right: CGFloat) {
+        var l =  (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) - 5
+        var r = (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) + 5
+        return (left: l, right: r)
+    }
+    
+    func calcXBoundPosition (center: CGFloat) -> (left: CGFloat, right: CGFloat) {
+        var l = center - (circlesSize / 2)
+        var r = center - (circlesSize / 2)
+        return (left: l, right: r)
+    }
+    
     
     
     override func draw(_ rect: CGRect) {
@@ -30,34 +44,39 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     }
     
     override func awakeFromNib() {
-        width = self.bounds.size.width
-        print(width)
-        let firstCirclePostion = (width * firstValue / 100) + 17
-        let secondCirclePostion = (width * secondValue / 100) - 33
-        print(secondCirclePostion)
-        firstCircle = CircleView(frame: CGRect(x: firstCirclePostion, y: 10, width: 16, height: 16))
+        
+        /*
+         *   Calculate width of dragging zone
+         */
+        draggableZoneWidth = self.bounds.size.width-32-circlesSize-2
+        
+        
+        
+        /*
+        *   Init left Draggable Circle
+        */
+        let firstCirclePostion = calcXposition(percent: firstValue).left
+        firstCircle = CircleView(frame: CGRect(x: calcXBoundPosition(center: firstCirclePostion).left, y: 18-circlesSize/2, width: circlesSize, height: circlesSize))
         firstCircle?.backgroundColor = UIColor.clear
         firstCircle?.fillColor = tintColor
-        firstCircle?.clipsToBounds = false
-        secondCircle = CircleView(frame: CGRect(x:secondCirclePostion, y: 10, width: 16, height: 16))
+        self.addSubview(firstCircle!)
+        let gestureForFirstValue = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
+        gestureForFirstValue.delegate = self as UIGestureRecognizerDelegate
+        firstCircle!.addGestureRecognizer(gestureForFirstValue)
+        
+        
+        
+        /*
+         *   Init Right Draggable Circle
+         */
+        let secondCirclePostion = calcXposition(percent: secondValue).right
+        secondCircle = CircleView(frame: CGRect(x:calcXBoundPosition(center: secondCirclePostion).right , y: 18-circlesSize/2, width: circlesSize, height: circlesSize))
         secondCircle?.backgroundColor = UIColor.clear
         secondCircle?.fillColor = tintColor
-        secondCircle?.clipsToBounds = false
-        
-        
-      
-            self.addSubview(firstCircle!)
-            let gestureForFirstValue = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
-            gestureForFirstValue.delegate = self as UIGestureRecognizerDelegate
-            firstCircle!.addGestureRecognizer(gestureForFirstValue)
-     
-        
-        
-            self.addSubview(secondCircle!)
-            let gestureForSecondValue = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
-            gestureForSecondValue.delegate = self as UIGestureRecognizerDelegate
-            secondCircle!.addGestureRecognizer(gestureForSecondValue)
-        
+        self.addSubview(secondCircle!)
+        let gestureForSecondValue = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
+        gestureForSecondValue.delegate = self as UIGestureRecognizerDelegate
+        secondCircle!.addGestureRecognizer(gestureForSecondValue)
     }
     
     @objc func handleDrag(recognizer: UIPanGestureRecognizer) {
@@ -66,40 +85,41 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         if let view = recognizer.view {
             
             if (view == firstCircle && firstCircle!.isScrollable) {
-                if (firstValue < secondValue - 2) {
-                    firstValue += translation.x * 100 / width
+                if (firstValue < secondValue - 10) {
+                    firstValue += translation.x * 100 / draggableZoneWidth
                     view.center = CGPoint(x:view.center.x + translation.x, y:18)
                 }
-                if (firstValue >= secondValue - 4) {
+                if (firstValue >= secondValue - 10) {
                     firstCircle!.isScrollable = false
-                    firstValue -= 3
-                    let destination = width * firstValue / 100
+                    firstValue = secondValue - 10.01
+                    let destination = calcXposition(percent: firstValue).left
                     move(point: view, to: destination)
                 }
                 if (firstValue < 0) {
                     firstCircle!.isScrollable = false
-                    firstValue = 1
-                    let destination = width * firstValue / 100
+                    firstValue = 0
+                    let destination = calcXposition(percent: firstValue).left
+                    print("calculed Size : ", destination)
                     move(point: view, to: destination)
                 }
             }
             
             if (view == secondCircle && secondCircle!.isScrollable) {
-                if (secondValue > firstValue + 2) {
-                    secondValue += translation.x * 100 / width
+                if (secondValue > firstValue + 10) {
+                    secondValue += translation.x * 100 / draggableZoneWidth
                     view.center = CGPoint(x:view.center.x + translation.x, y:18)
                 }
-                if (secondValue <= firstValue + 4) {
+                if (secondValue <= firstValue + 10) {
                     secondCircle!.isScrollable = false
-                    secondValue += 3
-                    let destination = width * secondValue / 100
+                    secondValue = firstValue + 10.01
+                    let destination = calcXposition(percent: secondValue).right
                     move(point: view, to: destination)
                 }
                 
-                if (secondValue >= 101) {
+                if (secondValue > 100) {
                     secondCircle!.isScrollable = false
                     secondValue = 100
-                    let destination = width * secondValue / 100
+                    let destination = calcXposition(percent: secondValue).right
                     move(point: view, to: destination)
                 }
             }
@@ -132,7 +152,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     }
     
     func move(point: UIView, to: CGFloat) {
-        let pointDestination = CGPoint(x: to+16, y: 18)
+        let pointDestination = CGPoint(x: to, y: 18)
         UIView.animate(withDuration: 0.2, animations: {
             point.center = pointDestination
         }, completion: nil)

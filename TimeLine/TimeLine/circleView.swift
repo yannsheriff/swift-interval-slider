@@ -17,7 +17,7 @@ class CircleView: UIView {
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.setFillColor(fillColor.cgColor)
         ctx?.setShadow(offset: CGSize(width: 0, height: 0), blur: 3, color: fillColor.cgColor)
-        ctx?.addEllipse(in: CGRect(origin: CGPoint(x: 0 , y: 0), size: CGSize(width: rect.size.width, height: rect.size.height)))
+        ctx?.addEllipse(in: CGRect(origin: CGPoint(x: 5 , y: 5), size: CGSize(width: rect.size.width - 10 , height: rect.size.height - 10 )))
         ctx?.fillPath()
     }
 }
