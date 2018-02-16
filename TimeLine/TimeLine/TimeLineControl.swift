@@ -15,22 +15,12 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     var draggableZoneWidth : CGFloat!
     var firstCircle : CircleView?
     var secondCircle : CircleView?
+    var line : LineView?
     var firstValue : CGFloat = 0
     var secondValue : CGFloat = 100
     var circlesSize : CGFloat = 32
     
-    func calcXposition(percent: CGFloat) -> (left: CGFloat, right: CGFloat) {
-        var l =  (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) - 5
-        var r = (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) + 5
-        return (left: l, right: r)
-    }
-    
-    func calcXBoundPosition (center: CGFloat) -> (left: CGFloat, right: CGFloat) {
-        var l = center - (circlesSize / 2)
-        var r = center - (circlesSize / 2)
-        return (left: l, right: r)
-    }
-    
+
     
     
     override func draw(_ rect: CGRect) {
@@ -50,6 +40,14 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
          */
         draggableZoneWidth = self.bounds.size.width-32-circlesSize-2
         
+        
+        /*
+         *   Init Line
+         */
+        line = LineView(frame: CGRect(x: calcStartLine(percent: 0) , y: 12, width: 60, height: 13))
+        line?.backgroundColor = UIColor.clear
+        line?.fillColor = tintColor
+        self.addSubview(line!)
         
         
         /*
@@ -77,6 +75,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         let gestureForSecondValue = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
         gestureForSecondValue.delegate = self as UIGestureRecognizerDelegate
         secondCircle!.addGestureRecognizer(gestureForSecondValue)
+        
     }
     
     @objc func handleDrag(recognizer: UIPanGestureRecognizer) {
@@ -88,12 +87,16 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                 if (firstValue < secondValue - 10) {
                     firstValue += translation.x * 100 / draggableZoneWidth
                     view.center = CGPoint(x:view.center.x + translation.x, y:18)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
-                if (firstValue >= secondValue - 10) {
+                if (firstValue > secondValue - 10) {
                     firstCircle!.isScrollable = false
-                    firstValue = secondValue - 10.01
+                    firstValue = secondValue - 10.1
                     let destination = calcXposition(percent: firstValue).left
                     move(point: view, to: destination)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
                 if (firstValue < 0) {
                     firstCircle!.isScrollable = false
@@ -101,6 +104,8 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                     let destination = calcXposition(percent: firstValue).left
                     print("calculed Size : ", destination)
                     move(point: view, to: destination)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
             }
             
@@ -108,12 +113,16 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                 if (secondValue > firstValue + 10) {
                     secondValue += translation.x * 100 / draggableZoneWidth
                     view.center = CGPoint(x:view.center.x + translation.x, y:18)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
-                if (secondValue <= firstValue + 10) {
+                if (secondValue < firstValue + 10) {
                     secondCircle!.isScrollable = false
-                    secondValue = firstValue + 10.01
+                    secondValue = firstValue + 10.1
                     let destination = calcXposition(percent: secondValue).right
                     move(point: view, to: destination)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
                 
                 if (secondValue > 100) {
@@ -121,6 +130,8 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                     secondValue = 100
                     let destination = calcXposition(percent: secondValue).right
                     move(point: view, to: destination)
+                    moveLineToCenter()
+                    calculateLineSize()
                 }
             }
             
@@ -139,22 +150,53 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     }
     
     
-//    func move(point: CircleView, to: CGFloat, contextWidth: CGFloat ) {
-//        let destination = (width / 100 * to)
-//        let pointDestination = CGPoint(x: destination, y: 18)
-//        UIView.animate(withDuration: 0.6, animations: {
-//            point.center = pointDestination
-//        }, completion: nil)
-//    }
     
     func percentToPosition () {
         
     }
+    
+    func calcXposition(percent: CGFloat) -> (left: CGFloat, right: CGFloat) {
+        let l =  (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) - 5
+        let r = (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize/2) + 5
+        return (left: l, right: r)
+    }
+    
+    func calcXBoundPosition (center: CGFloat) -> (left: CGFloat, right: CGFloat) {
+        let l = center - (circlesSize / 2)
+        let r = center - (circlesSize / 2)
+        return (left: l, right: r)
+    }
+    
+    func calcStartLine (percent: CGFloat) ->  CGFloat {
+        return (draggableZoneWidth * percent / 100) + (1 + 16 + circlesSize) - 10
+    }
+    
     
     func move(point: UIView, to: CGFloat) {
         let pointDestination = CGPoint(x: to, y: 18)
         UIView.animate(withDuration: 0.2, animations: {
             point.center = pointDestination
         }, completion: nil)
+    }
+    
+    func moveStartLine(to: CGFloat) {
+        let a = (draggableZoneWidth * to / 100)
+        let dest = a + (1 + 16 + circlesSize - 10) + line!.bounds.size.width / 2
+        let pointDestination = CGPoint(x: dest, y: 18)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.line!.center = pointDestination
+        }, completion: nil)
+    }
+    
+    func moveLineToCenter() {
+        let center = (firstValue + secondValue)/2
+        let XPosition = (draggableZoneWidth * center / 100) + circlesSize
+        line?.center = CGPoint(x: XPosition, y: 18)
+    }
+    
+    func calculateLineSize() {
+        let center = (secondValue - firstValue)
+        let width = ( center * draggableZoneWidth / 100)
+        line!.bounds.size.width = width
     }
 }
