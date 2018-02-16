@@ -18,6 +18,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     private var line : LineView?
     @IBInspectable var firstValue : CGFloat = 50
     @IBInspectable var secondValue : CGFloat = 100
+    @IBInspectable var isDraggable : Bool = true
     private var circlesSize : CGFloat = 32
     private var viewDidInit = false
     
