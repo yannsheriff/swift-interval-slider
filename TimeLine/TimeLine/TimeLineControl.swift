@@ -18,7 +18,8 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     private var line : LineView?
     @IBInspectable var firstValue : CGFloat = 50
     @IBInspectable var secondValue : CGFloat = 100
-    @IBInspectable var isDraggable : Bool = true
+    @IBInspectable var timelineMode : Bool = false
+    @IBInspectable var timelineStep : Int = 5
     private var circlesSize : CGFloat = 32
     private var viewDidInit = false
     
@@ -36,6 +37,16 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         ctx?.addLine(to: CGPoint(x: rect.size.width - circleRadius * 2, y: verticalPosition + circleRadius))
         ctx?.addEllipse(in: CGRect(origin: CGPoint(x:rect.size.width - circleRadius * 2 - 1 , y: 10), size: CGSize(width: circleRadius * 2, height: circleRadius * 2)))
         ctx?.strokePath()
+        
+        if timelineMode {
+            let width  = rect.size.width - circleRadius * 4 - 2
+            let intervalBetweenCircles = width / CGFloat(timelineStep)
+            
+            for i in 0..<timelineStep {
+                
+            }
+            
+        }
     }
     
     

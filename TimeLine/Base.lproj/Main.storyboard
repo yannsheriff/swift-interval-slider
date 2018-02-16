@@ -32,6 +32,10 @@
                                         <real key="value" value="100"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isDraggable" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="timelineMode" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="timelineStep">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
