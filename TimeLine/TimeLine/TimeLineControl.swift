@@ -9,7 +9,19 @@
 import UIKit
 
 protocol TimeLineControlDelegate: class {
+    
+    /**
+     Function Triggered When the user is actualy dragging one of the thumbs.
+     
+     - returns: an array with both values [firstThumb, secondThumb]
+     */
     func userIsDragging(_ values: Array<CGFloat>)
+    
+    /**
+     Function Triggered when the user stop dragging and remove he's finger.
+     
+     - returns: an array with both values [firstThumb, secondThumb]
+     */
     func userDidEndDrag(_ values: Array<CGFloat>)
 }
 
@@ -314,8 +326,10 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     == Public Functions  ==
     ======================================================= */
     
-    /*
-     *   Anim change firstValue
+    /**
+     Move the first thumb of your slider to the position.
+     
+     @param CGFLoat from 0 to 100
      */
     public func changeFirstValue(to: CGFloat) {
         if !timelineMode {
@@ -327,8 +341,11 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    /*
-     *  Anim change secondValue
+    
+    /**
+     Move the Second thumb of your slider to the position.
+     
+     - parameter to: CGFLoat from 0 to 100
      */
     public func changeSecondValue(to: CGFloat) {
         if !timelineMode {
@@ -340,8 +357,12 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    /*
-     *   Anim change both Value
+    
+    /**
+     Move the both thumb of your slider to the position.
+     
+     - parameter first: value of first thumb from 0 to 100
+     - parameter second: value of second thumb from 0 to 100
      */
     public func changeValues(first: CGFloat, second: CGFloat) {
         if !timelineMode {
@@ -356,8 +377,8 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    /*
-     *   Anim add step to timeLine
+    /**
+     Increment the timeLine By 1
      */
     public func addStep() {
         if timelineMode {
@@ -379,8 +400,8 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    /*
-     *   Anim add step to timeLine
+    /**
+     Decrement the timeLine By 1
      */
     public func removeStep() {
         if timelineMode {

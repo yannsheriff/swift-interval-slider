@@ -21,6 +21,7 @@ class ViewController: UIViewController, TimeLineControlDelegate {
     func userDidEndDrag(_ values: Array<CGFloat>) {
         
     }
+    
     @IBAction func didStep(_ sender: UIStepper) {
         if (sender.value > 1) {
             TimeLineControl.addStep()
