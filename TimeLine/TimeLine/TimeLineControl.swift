@@ -58,6 +58,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     @IBInspectable  var timelineMode        : Bool = false
     @IBInspectable  var timelineSteps       : Int = 5
     @IBInspectable  var timelineInitSteps   : Int = 1
+    @IBInspectable  var LineColor           : UIColor = UIColor.black
     private         var viewDidInit         : Bool = false
     private         var circles             : Array<CircleView>     = []
     weak            var delegate            : TimeLineControlDelegate?
@@ -86,6 +87,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                 let strokes     = (CGFloat(i) * intervalBetweenCircles)
                 let circles     = (CGFloat(i) * (circleRadius*2)) + (circleRadius*2) + 1
                 let startStroke = strokes + circles
+                ctx?.setStrokeColor(LineColor.cgColor)
                 ctx?.addEllipse(
                     in: CGRect(
                         origin: CGPoint(

@@ -20,7 +20,8 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wz5-1c-tSO" customClass="TimeLineControl" customModule="TimeLine" customModuleProvider="target">
                                 <rect key="frame" x="16" y="88" width="343" height="71"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="tintColor" red="0.019607843137254902" green="0.87058823529411766" blue="0.65098039215686276" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="RV2-2T-Go4"/>
                                 </constraints>
@@ -41,6 +42,9 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="timelineInitSteps">
                                         <integer key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="LineColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ulf-go-aWM">
@@ -58,7 +62,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Wz5-1c-tSO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="68" id="HbQ-gU-dUi"/>
                             <constraint firstItem="Wz5-1c-tSO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="dTU-VQ-ZTH"/>
