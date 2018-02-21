@@ -9,6 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController, TimeLineControlDelegate {
+    func userAddedStep(_ value: Int) {
+        print(value)
+    }
+    
+    func userRemovedStep(_ value: Int) {
+        print(value)
+    }
+    
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var TimeLineControl: TimeLineControl!

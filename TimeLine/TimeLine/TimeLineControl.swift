@@ -23,6 +23,20 @@ protocol TimeLineControlDelegate: class {
      - returns: an array with both values [firstThumb, secondThumb]
      */
     func userDidEndDrag(_ values: Array<CGFloat>)
+    
+    /**
+     Function Triggered when the user add a step to the timeLine.
+     
+     - returns: return the value of the new step
+     */
+    func userAddedStep(_ value: Int)
+    
+    /**
+     Function Triggered when the user remove a step from the timeLine.
+     
+     - returns: return the value of the new step
+     */
+    func userRemovedStep(_ value: Int)
 }
 
 class TimeLineControl: UIView, UIGestureRecognizerDelegate {
@@ -308,6 +322,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
      */
     @objc func handleSwipRight(recognizer: UISwipeGestureRecognizer) {
         self.addStep()
+        delegate?.userAddedStep(circles.count)
     }
     
     /*
@@ -315,6 +330,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
      */
     @objc func handleSwipLeft(recognizer: UISwipeGestureRecognizer) {
         self.removeStep()
+        delegate?.userRemovedStep(circles.count)
     }
     
     

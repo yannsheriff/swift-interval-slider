@@ -31,7 +31,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="secondValue">
                                         <real key="value" value="100"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="timelineMode" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="timelineMode" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="circlesSize">
                                         <real key="value" value="28"/>
                                     </userDefinedRuntimeAttribute>
