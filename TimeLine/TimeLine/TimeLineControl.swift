@@ -54,7 +54,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     private         var line                : LineView?
     @IBInspectable  var firstValue          : CGFloat = 50
     @IBInspectable  var secondValue         : CGFloat = 100
-    @IBInspectable  var circlesSize         : CGFloat = 32
+    @IBInspectable  var thumbSize         : CGFloat = 32
     @IBInspectable  var timelineMode        : Bool = false
     @IBInspectable  var timelineSteps       : Int = 5
     @IBInspectable  var timelineInitSteps   : Int = 1
@@ -165,7 +165,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
    ======================================================= */
     
     override func awakeFromNib() {
-        draggableZoneWidth = self.bounds.size.width-circlesSize-2
+        draggableZoneWidth = self.bounds.size.width-thumbSize-2
         if (!timelineMode) {
             
             /*
@@ -175,9 +175,9 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
             firstCircle = CircleView(
                 frame: CGRect(
                     x: calcXBoundPosition(center: firstCirclePostion).left,
-                    y: 18-circlesSize/2,
-                    width: circlesSize,
-                    height: circlesSize
+                    y: 18-thumbSize/2,
+                    width: thumbSize,
+                    height: thumbSize
             ))
             firstCircle?.backgroundColor = UIColor.clear
             firstCircle?.fillColor = tintColor
@@ -193,9 +193,9 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
             secondCircle = CircleView(
                 frame: CGRect(
                     x:calcXBoundPosition(center: secondCirclePostion).right ,
-                    y: 18-circlesSize/2,
-                    width: circlesSize,
-                    height: circlesSize
+                    y: 18-thumbSize/2,
+                    width: thumbSize,
+                    height: thumbSize
             ))
             secondCircle?.backgroundColor = UIColor.clear
             secondCircle?.fillColor = tintColor
@@ -228,7 +228,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
      */
     override func layoutSubviews() {
         if (!viewDidInit) {
-            draggableZoneWidth = self.bounds.size.width-circlesSize-2
+            draggableZoneWidth = self.bounds.size.width-thumbSize-2
             drawInitialLine()
             if !timelineMode {
                changeValues(first: firstValue, second: secondValue)
@@ -462,7 +462,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                 let intervalBetweenCircles = (width - ( CGFloat(timelineSteps) * (2*circleRadius)))/CGFloat(timelineSteps) - 1
                 let x = CGFloat(timelineInitSteps == 0 ? 0 : timelineInitSteps - 1)
                 let lineSizeforInit = (x-1) * (2 * circleRadius) + x * intervalBetweenCircles
-                line = LineView(frame: CGRect(x: 17 , y: 12, width: lineSizeforInit, height: 13))
+                line = LineView(frame: CGRect(x: 1 + 2*circleRadius , y: 12, width: lineSizeforInit, height: 13))
                 line?.backgroundColor = UIColor.clear
                 line?.fillColor = tintColor
                 drawCircles(nbCirclesToDraw: timelineInitSteps, timelineWidth: intervalBetweenCircles )
@@ -487,7 +487,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
                     let sumCircles = CGFloat(drawedCircles) * (2*circleRadius)
                     let sumInterval = CGFloat(drawedCircles) * intervalBetweenCircles
                     let pos = sumCircles + sumInterval - 5
-                    createCircleWithAnimation(x: pos, y: 18-circlesSize/2)
+                    createCircleWithAnimation(x: pos, y: 18-thumbSize/2)
                     
                     i = i + 1
                 } while i < circleLeftToDraw
@@ -505,7 +505,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
             var i : Int = 0
             repeat {
                 let circlePostion = drawCircles_calcXposition(index: i, width: timelineWidth)
-                let circle = CircleView(frame: CGRect(x: circlePostion, y: 18-circlesSize/2, width: circlesSize, height: circlesSize))
+                let circle = CircleView(frame: CGRect(x: circlePostion, y: 18-thumbSize/2, width: thumbSize, height: thumbSize))
                 circle.backgroundColor = UIColor.clear
                 circle.fillColor = tintColor
                 circles.append(circle)
@@ -521,33 +521,33 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     }
     
     private func createCircleWithAnimation(x: CGFloat, y: CGFloat) {
-        let x = x + self.circlesSize / 2
-        let y = y + self.circlesSize / 2
+        let x = x + self.thumbSize / 2
+        let y = y + self.thumbSize / 2
         let circle = CircleView(frame: CGRect(x: x, y: y, width: 0, height: 0))
         circle.backgroundColor = UIColor.clear
         circle.fillColor = tintColor
         self.circles.append(circle)
         self.addSubview(circle)
         UIView.animate(withDuration: 0.6, animations: {
-            circle.bounds.size.width = self.circlesSize
-            circle.bounds.size.height = self.circlesSize
+            circle.bounds.size.width = self.thumbSize
+            circle.bounds.size.height = self.thumbSize
         }, completion: nil)
     }
     
     private func calcXposition(percent: CGFloat) -> (left: CGFloat, right: CGFloat) {
-        let l =  (draggableZoneWidth * percent / 100) + (1  + circlesSize/2) - 5
-        let r = (draggableZoneWidth * percent / 100) + (1  + circlesSize/2) + 5
+        let l =  (draggableZoneWidth * percent / 100) + (1  + thumbSize/2) - 5
+        let r = (draggableZoneWidth * percent / 100) + (1  + thumbSize/2) + 5
         return (left: l, right: r)
     }
     
     private func calcXBoundPosition (center: CGFloat) -> (left: CGFloat, right: CGFloat) {
-        let l = center - (circlesSize / 2)
-        let r = center - (circlesSize / 2)
+        let l = center - (thumbSize / 2)
+        let r = center - (thumbSize / 2)
         return (left: l, right: r)
     }
     
     private func calcStartLine (percent: CGFloat) ->  CGFloat {
-        return (draggableZoneWidth * percent / 100) + (1 + circlesSize) - 10
+        return (draggableZoneWidth * percent / 100) + (1 + thumbSize) - 10
     }
     
     
@@ -560,7 +560,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     
     private func moveStartLine(to: CGFloat) {
         let a = (draggableZoneWidth * to / 100)
-        let dest = a + (1 + 16 + circlesSize - 10) + line!.bounds.size.width / 2
+        let dest = a + (1 + 2*circleRadius + thumbSize - 10) + line!.bounds.size.width / 2
         let pointDestination = CGPoint(x: dest, y: 18)
         UIView.animate(withDuration: 0.2, animations: {
             self.line!.center = pointDestination
@@ -569,7 +569,7 @@ class TimeLineControl: UIView, UIGestureRecognizerDelegate {
     
     private func moveLineToCenter(animated: Bool) {
         let center = (firstValue + secondValue)/2
-        let XPosition = (draggableZoneWidth * center / 100) + circlesSize/2
+        let XPosition = (draggableZoneWidth * center / 100) + thumbSize/2
         
         
         if animated {
