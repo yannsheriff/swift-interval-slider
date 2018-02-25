@@ -45,6 +45,10 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="LineColor">
                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thumbSize">
+                                        <real key="value" value="28"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="timelineLabel" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ulf-go-aWM">
